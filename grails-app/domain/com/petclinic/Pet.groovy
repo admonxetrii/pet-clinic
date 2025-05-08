@@ -18,7 +18,7 @@ class Pet {
     }
 
     static constraints = {
-        name blank: false
+        name blank: false, matches: /^[A-Za-z ]+$/
         dateOfBirth blank: false
         type blank: false, inList: ['Dog', 'Cat', 'Bird', 'Rabbit', 'Fish', 'Other']
     }
