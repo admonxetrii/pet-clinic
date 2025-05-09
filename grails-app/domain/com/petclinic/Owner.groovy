@@ -13,9 +13,9 @@ class Owner {
     }
 
     static constraints = {
-        firstName blank: false, matches: /^[A-Za-z ]+$/
-        lastName blank: false, matches: /^[A-Za-z ]+$/
-        contactNumber blank: false, matches: /^\d{10}$/
-        address blank: false
+        firstName blank: false, nullable: false, matches: /^[A-Za-z ]+$/
+        lastName blank: false, nullable: false, matches: /^[A-Za-z ]+$/
+        contactNumber blank: false, nullable: false, maxSize: 10, minSize: 10, matches: /^\d{10}+$/, unique: true
+        address blank: false, nullable: false, maxSize: 255, minSize: 4
     }
 }

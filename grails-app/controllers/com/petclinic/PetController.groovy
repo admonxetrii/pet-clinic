@@ -1,5 +1,8 @@
 package com.petclinic
 
+import grails.gorm.transactions.Transactional
+
+
 class PetController {
     static scaffold = Pet
 
@@ -43,6 +46,7 @@ class PetController {
         render view: 'edit', model: [pet: pet, owners: Owner.list()]
     }
 
+    @Transactional
     def update() {
         def pet = Pet.get(params.id)
         if (!pet) {
@@ -52,7 +56,7 @@ class PetController {
         }
 
         pet.properties = params
-        if (pet.validate() && pet.save()) {
+        if (pet.validate() && pet.save(flush: true)) {
             flash.message = "Pet updated successfully"
             redirect action: 'show', id: pet.id
         } else {
@@ -60,10 +64,11 @@ class PetController {
         }
     }
 
+    @Transactional
     def delete() {
         def pet = Pet.get(params.id)
         if (pet) {
-            pet.delete()
+            pet.delete(flush: true)
             flash.message = "Pet deleted successfully"
         }
         redirect action: 'index'

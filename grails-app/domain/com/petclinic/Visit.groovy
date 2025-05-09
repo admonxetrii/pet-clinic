@@ -8,7 +8,7 @@ class Visit {
     static constraints = {
         pet nullable: false
         visitDate blank: false
-        description blank: false, maxSize: 1000, matches: /^[A-Za-z0-9 .,!?-]+$/
+        description blank: false, maxSize: 1000
     }
 
     static mapping = {

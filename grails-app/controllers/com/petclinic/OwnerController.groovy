@@ -1,7 +1,11 @@
 package com.petclinic
 
+import grails.gorm.transactions.Transactional
+import groovy.util.logging.Slf4j
+
+@Slf4j
 class OwnerController {
-    static scaffold = Owner
+    static scaffolding = Owner
 
     def index() {
         def owners = Owner.list()
@@ -9,7 +13,7 @@ class OwnerController {
     }
 
     def create() {
-        render view: 'create', model: [owner: new Owner()]
+        render view: '/owner/create', model: [owner: new Owner()]
     }
 
     def save() {
@@ -18,7 +22,8 @@ class OwnerController {
             flash.message = "Owner ${owner.firstName} ${owner.lastName} created successfully"
             redirect action: 'index'
         } else {
-            render view: 'create', model: [owner: owner]
+            flash.error = "Some of the field needs to be corrected!!"
+            render view: '/owner/create', model: [owner: owner]
         }
     }
 
@@ -29,7 +34,7 @@ class OwnerController {
             redirect action: 'index'
             return
         }
-        render view: 'show', model: [owner: owner]
+        render view: '/owner/show', model: [owner: owner]
     }
 
     def edit() {
@@ -39,9 +44,10 @@ class OwnerController {
             redirect action: 'index'
             return
         }
-        render view: 'edit', model: [owner: owner]
+        render view: '/owner/edit', model: [owner: owner]
     }
 
+    @Transactional
     def update() {
         def owner = Owner.get(params.id)
         if (!owner) {
@@ -49,20 +55,22 @@ class OwnerController {
             redirect action: 'index'
             return
         }
+        log.info("Update Successful")
 
         owner.properties = params
-        if (owner.validate() && owner.save()) {
+        if (owner.validate() && owner.save(flush: true)) {
             flash.message = "Owner updated successfully"
             redirect action: 'show', id: owner.id
         } else {
-            render view: 'edit', model: [owner: owner]
+            render view: '/owner/edit', model: [owner: owner]
         }
     }
 
+    @Transactional
     def delete() {
         def owner = Owner.get(params.id)
         if (owner) {
-            owner.delete()
+            owner.delete(flush: true)
             flash.message = "Owner deleted successfully"
         }
         redirect action: 'index'

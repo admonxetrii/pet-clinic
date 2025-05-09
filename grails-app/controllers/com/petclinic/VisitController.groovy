@@ -1,5 +1,7 @@
 package com.petclinic
 
+import grails.gorm.transactions.Transactional
+
 class VisitController {
     static scaffold = Visit
 
@@ -43,6 +45,7 @@ class VisitController {
         render view: 'edit', model: [visit: visit, pets: Pet.list()]
     }
 
+    @Transactional
     def update() {
         def visit = Visit.get(params.id)
         if (!visit) {
@@ -60,6 +63,7 @@ class VisitController {
         }
     }
 
+    @Transactional
     def delete() {
         def visit = Visit.get(params.id)
         if (visit) {
