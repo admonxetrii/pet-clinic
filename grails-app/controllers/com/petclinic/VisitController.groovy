@@ -3,10 +3,11 @@ package com.petclinic
 import grails.gorm.transactions.Transactional
 
 class VisitController {
+    def visitService
     static scaffold = Visit
 
     def index() {
-        def visits = Visit.list()
+        def visits = visitService.listVisits()
         render view: 'index', model: [visits: visits]
     }
 
@@ -16,8 +17,9 @@ class VisitController {
     }
 
     def save() {
-        def visit = new Visit(params)
-        if (visit.validate() && visit.save()) {
+        def result = visitService.createVisit(params)
+        def visit = result.visit
+        if (result.success) {
             flash.message = "Visit created successfully"
             redirect action: 'index'
         } else {
@@ -26,7 +28,7 @@ class VisitController {
     }
 
     def show() {
-        def visit = Visit.get(params.id)
+        def visit = visitService.getVisit(params.id as Long)
         if (!visit) {
             flash.message = "Visit not found"
             redirect action: 'index'
@@ -36,7 +38,7 @@ class VisitController {
     }
 
     def edit() {
-        def visit = Visit.get(params.id)
+        def visit = visitService.getVisit(params.id as Long)
         if (!visit) {
             flash.message = "Visit not found"
             redirect action: 'index'
@@ -47,15 +49,14 @@ class VisitController {
 
     @Transactional
     def update() {
-        def visit = Visit.get(params.id)
+        def result = visitService.updateVisit(params.id as Long, params)
+        def visit = result.visit
         if (!visit) {
             flash.message = "Visit not found"
             redirect action: 'index'
             return
         }
-
-        visit.properties = params
-        if (visit.validate() && visit.save()) {
+        if (result.success) {
             flash.message = "Visit updated successfully"
             redirect action: 'show', id: visit.id
         } else {
@@ -65,9 +66,8 @@ class VisitController {
 
     @Transactional
     def delete() {
-        def visit = Visit.get(params.id)
-        if (visit) {
-            visit.delete()
+        def deleted = visitService.deleteVisit(params.id as Long)
+        if (deleted) {
             flash.message = "Visit deleted successfully"
         }
         redirect action: 'index'

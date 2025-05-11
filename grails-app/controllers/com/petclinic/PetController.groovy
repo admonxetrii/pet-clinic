@@ -4,10 +4,11 @@ import grails.gorm.transactions.Transactional
 
 
 class PetController {
+    def petService
     static scaffold = Pet
 
     def index() {
-        def pets = Pet.list()
+        def pets = petService.listPets()
         render view: 'index', model: [pets: pets]
     }
 
@@ -17,8 +18,9 @@ class PetController {
     }
 
     def save() {
-        def pet = new Pet(params)
-        if (pet.validate() && pet.save()) {
+        def result = petService.createPet(params)
+        def pet = result.pet
+        if (result.success) {
             flash.message = "Pet ${pet.name} created successfully"
             redirect action: 'index'
         } else {
@@ -27,7 +29,7 @@ class PetController {
     }
 
     def show() {
-        def pet = Pet.get(params.id)
+        def pet = petService.getPet(params.id as Long)
         if (!pet) {
             flash.message = "Pet not found"
             redirect action: 'index'
@@ -37,7 +39,7 @@ class PetController {
     }
 
     def edit() {
-        def pet = Pet.get(params.id)
+        def pet = petService.getPet(params.id as Long)
         if (!pet) {
             flash.message = "Pet not found"
             redirect action: 'index'
@@ -48,15 +50,14 @@ class PetController {
 
     @Transactional
     def update() {
-        def pet = Pet.get(params.id)
+        def result = petService.updatePet(params.id as Long, params)
+        def pet = result.pet
         if (!pet) {
             flash.message = "Pet not found"
             redirect action: 'index'
             return
         }
-
-        pet.properties = params
-        if (pet.validate() && pet.save(flush: true)) {
+        if (result.success) {
             flash.message = "Pet updated successfully"
             redirect action: 'show', id: pet.id
         } else {
@@ -66,9 +67,8 @@ class PetController {
 
     @Transactional
     def delete() {
-        def pet = Pet.get(params.id)
-        if (pet) {
-            pet.delete(flush: true)
+        def deleted = petService.deletePet(params.id as Long)
+        if (deleted) {
             flash.message = "Pet deleted successfully"
         }
         redirect action: 'index'

@@ -5,7 +5,11 @@
 // You're free to add application-wide JavaScript to this file, but it's generally better
 // to create separate JavaScript files as needed.
 //
-//= require jquery-3.5.1.min
-//= require popper.min
-//= require bootstrap
+//= require sb-admin-2
+//= require jquery/jquery.min
+//= require bootstrap/js/bootstrap.bundle.min
+//= require jquery-easing/jquery.easing.min
+//= require chart.js/Chart.min
+//= require demo/chart-area-demo
+//= require demo/chart-pie-demo
 //= require_self

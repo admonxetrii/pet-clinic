@@ -16,13 +16,14 @@ class DashboardService {
     }
 
     def getPetTypes() {
-        def petTypes = Pet.createCriteria().list {
-            projections {
-                groupProperty('type')
-                count('id')
-            }
-            order('type')
+    def petTypes = Pet.createCriteria().list {
+        projections {
+            groupProperty('type')
+            count('id')
         }
-        return petTypes
+        order('type')
     }
+    // Convert Java arrays to Groovy lists for proper JSON serialization
+    return petTypes.collect { it instanceof Object[] ? it.toList() : it }
+}
 }

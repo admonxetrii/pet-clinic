@@ -5,10 +5,11 @@ import groovy.util.logging.Slf4j
 
 @Slf4j
 class OwnerController {
+    def ownerService
     static scaffolding = Owner
 
     def index() {
-        def owners = Owner.list()
+        def owners = ownerService.listOwners()
         render view: 'index', model: [owners: owners]
     }
 
@@ -17,8 +18,9 @@ class OwnerController {
     }
 
     def save() {
-        def owner = new Owner(params)
-        if (owner.validate() && owner.save()) {
+        def result = ownerService.createOwner(params)
+        def owner = result.owner
+        if (result.success) {
             flash.message = "Owner ${owner.firstName} ${owner.lastName} created successfully"
             redirect action: 'index'
         } else {
@@ -28,7 +30,7 @@ class OwnerController {
     }
 
     def show() {
-        def owner = Owner.get(params.id)
+        def owner = ownerService.getOwner(params.id as Long)
         if (!owner) {
             flash.message = "Owner not found"
             redirect action: 'index'
@@ -38,7 +40,7 @@ class OwnerController {
     }
 
     def edit() {
-        def owner = Owner.get(params.id)
+        def owner = ownerService.getOwner(params.id as Long)
         if (!owner) {
             flash.message = "Owner not found"
             redirect action: 'index'
@@ -49,16 +51,14 @@ class OwnerController {
 
     @Transactional
     def update() {
-        def owner = Owner.get(params.id)
+        def result = ownerService.updateOwner(params.id as Long, params)
+        def owner = result.owner
         if (!owner) {
             flash.message = "Owner not found"
             redirect action: 'index'
             return
         }
-        log.info("Update Successful")
-
-        owner.properties = params
-        if (owner.validate() && owner.save(flush: true)) {
+        if (result.success) {
             flash.message = "Owner updated successfully"
             redirect action: 'show', id: owner.id
         } else {
@@ -68,9 +68,8 @@ class OwnerController {
 
     @Transactional
     def delete() {
-        def owner = Owner.get(params.id)
-        if (owner) {
-            owner.delete(flush: true)
+        def deleted = ownerService.deleteOwner(params.id as Long)
+        if (deleted) {
             flash.message = "Owner deleted successfully"
         }
         redirect action: 'index'
