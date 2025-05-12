@@ -9,5 +9,6 @@
 *
 *= require sb-admin-2
 *= require fontawesome-free/css/all.min
+*= require datatables/dataTables.bootstrap4.min
 *= require_self
 */

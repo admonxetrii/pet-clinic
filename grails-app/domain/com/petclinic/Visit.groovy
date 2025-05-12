@@ -1,8 +1,10 @@
 package com.petclinic
 
+import java.time.LocalDate
+
 class Visit {
     Pet pet
-    Date visitDate
+    LocalDate visitDate
     String description
 
     static constraints = {

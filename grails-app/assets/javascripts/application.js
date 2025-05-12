@@ -5,11 +5,11 @@
 // You're free to add application-wide JavaScript to this file, but it's generally better
 // to create separate JavaScript files as needed.
 //
-//= require sb-admin-2
 //= require jquery/jquery.min
 //= require bootstrap/js/bootstrap.bundle.min
 //= require jquery-easing/jquery.easing.min
-//= require chart.js/Chart.min
-//= require demo/chart-area-demo
-//= require demo/chart-pie-demo
+//= require demo/datatables-demo
+//= require datatables/jquery.dataTables.min
+//= require datatables/dataTables.bootstrap4.min
+//= require sb-admin-2
 //= require_self

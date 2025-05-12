@@ -15,6 +15,8 @@
 
     <!-- Custom styles for this template-->
     <asset:stylesheet src="application.css"/>
+    <asset:javascript src="application.js"/>
+
 
     <g:layoutHead/>
 </head>
@@ -316,7 +318,6 @@
 %{--<asset:javascript src="vendor/jquery-easing/jquery.easing.min.js"/>--}%
 
 <!-- Custom scripts for all pages-->
-<asset:javascript src="application.js"/>
 
 <!-- Page level plugins -->
 %{--<asset:javascript src="vendor/chart.js/Chart.min.js"/>--}%
