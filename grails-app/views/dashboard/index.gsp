@@ -319,8 +319,7 @@
                 text: 'No. of Visits'
             }
         },
-        tooltip: {
-        },
+        tooltip: {},
         plotOptions: {
             column: {
                 pointPadding: 0.2,
