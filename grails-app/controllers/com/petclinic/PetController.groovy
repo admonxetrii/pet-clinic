@@ -13,7 +13,9 @@ class PetController {
     }
 
     def create() {
-        def owners = Owner.list()
+        if (params)
+            println(params)
+        def owners = params?.ownerId != null ? [Owner.get(params.ownerId)] : Owner.list()
         render view: 'create', model: [pet: new Pet(), owners: owners]
     }
 
@@ -22,7 +24,7 @@ class PetController {
         def pet = result.pet
         if (result.success) {
             flash.message = "Pet ${pet.name} created successfully"
-            redirect action: 'index'
+            redirectCheck(params, 'index')
         } else {
             render view: 'create', model: [pet: pet, owners: Owner.list()]
         }
@@ -42,7 +44,7 @@ class PetController {
         def pet = petService.getPet(params.id as Long)
         if (!pet) {
             flash.message = "Pet not found"
-            redirect action: 'index'
+            redirectCheck(params, 'index')
             return
         }
         render view: 'edit', model: [pet: pet, owners: Owner.list()]
@@ -54,12 +56,12 @@ class PetController {
         def pet = result.pet
         if (!pet) {
             flash.message = "Pet not found"
-            redirect action: 'index'
+            redirectCheck(params, 'index')
             return
         }
         if (result.success) {
             flash.message = "Pet updated successfully"
-            redirect action: 'show', id: pet.id
+            redirectCheck(params, 'index')
         } else {
             render view: 'edit', model: [pet: pet, owners: Owner.list()]
         }
@@ -71,6 +73,14 @@ class PetController {
         if (deleted) {
             flash.message = "Pet deleted successfully"
         }
-        redirect action: 'index'
+        redirectCheck(params, 'index')
+    }
+
+    def redirectCheck(params, action) {
+        if (params?.ownerId)
+            redirect controller: 'owner', action: 'show', id: params?.ownerId
+        else {
+            redirect action: action
+        }
     }
 }

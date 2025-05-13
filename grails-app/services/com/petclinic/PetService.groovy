@@ -32,6 +32,7 @@ class PetService {
         }
     }
 
+
     def deletePet(Long id) {
         def pet = Pet.get(id)
         if (pet) {

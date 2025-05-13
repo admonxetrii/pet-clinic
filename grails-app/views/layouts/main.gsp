@@ -32,7 +32,7 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+                <asset:image src="logo.png" height="40x" style="margin-right: -20px"/>
             </div>
 
             <div class="sidebar-brand-text mx-3">Pet Clinic</div>
@@ -42,7 +42,7 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item ${controllerName == 'dashboard' ? "active" : "" }">
             <a class="nav-link" href="${createLink(uri: '/')}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
@@ -57,7 +57,7 @@
         </div>
 
         <!-- Nav Item - Owner Menu -->
-        <li class="nav-item">
+        <li class="nav-item ${controllerName == 'owner' ? "active" : "" }">
             <a class="nav-link" href="${createLink(uri: '/owner')}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>Owners</span>
@@ -65,7 +65,7 @@
         </li>
 
         <!-- Nav Item - Pet Menu -->
-        <li class="nav-item">
+        <li class="nav-item ${controllerName == 'pet' ? "active" : "" }">
             <a class="nav-link" href="${createLink(uri: '/pet')}">
                 <i class="fas fa-fw fa-dog"></i>
                 <span>Pets</span>
@@ -73,7 +73,7 @@
         </li>
 
         <!-- Nav Item - Visit Menu -->
-        <li class="nav-item">
+        <li class="nav-item ${controllerName == 'visit' ? "active" : "" }">
             <a class="nav-link" href="${createLink(uri: '/visit')}">
                 <i class="fas fa-fw fa-clock"></i>
                 <span>Visits</span>

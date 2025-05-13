@@ -44,6 +44,9 @@
                     <label class="small mb-1" for="inputPetOwner">Owner</label>
                     <g:select id="inputPetOwner" name="owner.id" from="${owners}" optionKey="id" optionValue="${(owner) -> "${owner.firstName} ${owner.lastName}"}" value="${pet?.owner?.id}" required="" class="form-control"/>
                 </div>
+
+                <!-- Return to Owner Details if param is available -->
+                <g:textField name="ownerId" value="${params.ownerId}" hidden="hidden" />
             </div>
             <button type="submit" class="btn btn-primary">Create Pet</button>
             <g:link controller="pet" action="index" class="btn btn-secondary">Cancel</g:link>
