@@ -23,8 +23,16 @@ class Pet {
     }
 
     static constraints = {
-        name blank: false, nullable: false, matches: /^[A-Za-z ]+$/
-        dateOfBirth blank: false, nullable: false
-        type blank: false, nullable: false, inList: ["Dog", "Cat", "Bird", "Rabbit", "Fish", "Other"]
+        name blank: false, nullable: false, matches: /^[A-Za-z ]+$/,
+             blankMessage: 'pet.name.blank',
+             nullableMessage: 'pet.name.nullable',
+             matchesMessage: 'pet.name.matches'
+        dateOfBirth blank: false, nullable: false,
+                   blankMessage: 'pet.dateOfBirth.blank',
+                   nullableMessage: 'pet.dateOfBirth.nullable'
+        type blank: false, nullable: false, inList: ["Dog", "Cat", "Bird", "Rabbit", "Fish", "Other"],
+             blankMessage: 'pet.type.blank',
+             nullableMessage: 'pet.type.nullable',
+             inListMessage: 'pet.type.inList'
     }
 }

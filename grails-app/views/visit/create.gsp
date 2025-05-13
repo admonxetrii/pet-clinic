@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="small mb-1" for="inputVisitDate">Visit Date</label>
-                    <input type="date" id="inputVisitDate" name="visitDate" value="${visit?.visitDate instanceof java.util.Date ? visit?.visitDate.format('yyyy-MM-dd') : visit?.visitDate}" required class="form-control" />
+                    <input type="date" id="inputVisitDate" name="visitDate" value="${visit?.visitDate instanceof java.util.Date ? new java.text.SimpleDateFormat('yyyy-MM-dd').format(visit?.visitDate) : visit?.visitDate}" max="${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}" required class="form-control" />
                 </div>
             </div>
             <div class="mb-3">

@@ -8,9 +8,13 @@ class Visit {
     String description
 
     static constraints = {
-        pet nullable: false
-        visitDate blank: false
-        description blank: false, maxSize: 1000
+        pet nullable: false,
+            nullableMessage: 'visit.pet.nullable'
+        visitDate blank: false,
+                  blankMessage: 'visit.visitDate.blank'
+        description blank: false, maxSize: 1000,
+                    blankMessage: 'visit.description.blank',
+                    maxSizeMessage: 'visit.description.maxSize'
     }
 
     static mapping = {

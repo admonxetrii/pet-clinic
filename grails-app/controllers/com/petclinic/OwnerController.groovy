@@ -25,7 +25,8 @@ class OwnerController {
             redirect action: 'index'
         } else {
             flash.error = "Some of the field needs to be corrected!!"
-            render view: '/owner/create', model: [owner: owner]
+            // Pass both the owner instance and the original params to preserve form values
+            render view: '/owner/create', model: [owner: owner, formParams: params]
         }
     }
 
@@ -62,7 +63,9 @@ class OwnerController {
             flash.message = "Owner updated successfully"
             redirect action: 'show', id: owner.id
         } else {
-            render view: '/owner/edit', model: [owner: owner]
+            flash.error = "Some of the field needs to be corrected!!"
+            // Pass both the owner instance and the original params to preserve form values
+            render view: '/owner/edit', model: [owner: owner, formParams: params]
         }
     }
 

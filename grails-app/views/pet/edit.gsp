@@ -39,7 +39,7 @@
             <div class="row gx-3 mb-3">
                 <div class="col-md-6">
                     <label class="small mb-1" for="inputPetDOB">Date of Birth</label>
-                    <input type="date" id="inputPetDOB" name="dateOfBirth" value="${this.pet?.dateOfBirth instanceof java.util.Date ? this.pet?.dateOfBirth.format('yyyy-MM-dd') : this.pet?.dateOfBirth}" required class="form-control" />
+                    <input type="date" id="inputPetDOB" name="dateOfBirth" value="${this.pet?.dateOfBirth instanceof java.util.Date ? new java.text.SimpleDateFormat('yyyy-MM-dd').format(this.pet?.dateOfBirth) : this.pet?.dateOfBirth}" max="${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}" required class="form-control" />
                 </div>
                 <div class="col-md-6">
                     <label class="small mb-1" for="inputPetOwner">Owner</label>

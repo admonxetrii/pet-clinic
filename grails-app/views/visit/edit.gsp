@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="small mb-1" for="inputVisitDate">Visit Date</label>
-                    <g:datePicker id="inputVisitDate" name="visitDate" value="${this.visit?.visitDate}" required="" class="form-control"/>
+                    <input type="date" id="inputVisitDate" name="visitDate" value="${this.visit?.visitDate instanceof java.util.Date ? new java.text.SimpleDateFormat('yyyy-MM-dd').format(this.visit?.visitDate) : this.visit?.visitDate}" max="${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}" required class="form-control" />
                 </div>
             </div>
             <div class="mb-3">

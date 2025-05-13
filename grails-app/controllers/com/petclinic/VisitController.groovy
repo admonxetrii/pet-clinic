@@ -21,7 +21,7 @@ class VisitController {
         def visit = result.visit
         if (result.success) {
             flash.message = "Visit created successfully"
-            redirect action: 'index'
+            redirectCheck(params, visit)
         } else {
             render view: 'create', model: [visit: visit, pets: Pet.list()]
         }
@@ -58,7 +58,7 @@ class VisitController {
         }
         if (result.success) {
             flash.message = "Visit updated successfully"
-            redirect action: 'show', id: visit.id
+            redirectCheck(params, visit)
         } else {
             render view: 'edit', model: [visit: visit, pets: Pet.list()]
         }
@@ -71,5 +71,14 @@ class VisitController {
             flash.message = "Visit deleted successfully"
         }
         redirect action: 'index'
+    }
+
+    def redirectCheck(params, visit) {
+        def petId = params?.petId ?: visit?.pet?.id
+        if (petId) {
+            redirect controller: 'pet', action: 'show', id: petId
+        } else {
+            redirect action: 'index'
+        }
     }
 }

@@ -41,7 +41,7 @@
                 <!-- Form Group (first name)-->
                 <div class="col-md-6">
                     <label class="small mb-1" for="inputFirstName">First name</label>
-                    <g:textField id="inputFirstName" name="firstName" value="${owner?.firstName}" required=""
+                    <g:textField id="inputFirstName" name="firstName" value="${formParams?.firstName ?: owner?.firstName}" required=""
                                  class="form-control"
                                  pattern="[A-Za-z ]+" minSize="3" inputmode="text" placeholder="Enter your first name"/>
                     <div class="invalid-feedback">
@@ -51,7 +51,7 @@
                 <!-- Form Group (last name)-->
                 <div class="col-md-6">
                     <label class="small mb-1" for="inputLastName">Last name</label>
-                    <g:textField id="inputLastName" name="lastName" value="${owner?.lastName}" required=""
+                    <g:textField id="inputLastName" name="lastName" value="${formParams?.lastName ?: owner?.lastName}" required=""
                                  class="form-control"
                                  pattern="[A-Za-z ]+" inputmode="text" placeholder="Enter your last name"/>
                 </div>
@@ -60,15 +60,15 @@
             <div class="mb-3">
                 <!-- Form Group (phone number)-->
                 <label class="small mb-1" for="inputPhone">Phone number</label>
-                <g:textField id="inputPhone" name="contactNumber" value="${owner?.contactNumber}" required=""
+                <g:textField id="inputPhone" name="contactNumber" value="${formParams?.contactNumber ?: owner?.contactNumber}" required=""
                              class="form-control"
-                             pattern="~/\\[0-9]{10}" inputmode="numeric" maxlength="10" minLength="10"
+                             pattern="[0-9]{10}" inputmode="numeric" maxlength="10" minLength="10"
                              placeholder="Enter a 10 digit phone number (numbers only)"/>
             </div>
             <!-- Form Group (email address)-->
             <div class="mb-3">
                 <label class="small mb-1" for="inputEmailAddress">Owner address</label>
-                <g:textArea id="inputEmailAddress" name="address" value="${owner?.address}" required=""
+                <g:textArea id="inputEmailAddress" name="address" value="${formParams?.address ?: owner?.address}" required=""
                             class="form-control" placeholder="Enter your Address details"/>
             </div>
             <!-- Submit button-->
