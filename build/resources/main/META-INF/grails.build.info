@@ -1,0 +1,6 @@
+#Thu, 15 May 2025 10:20:33 +0545
+
+info.app.version=0.1
+info.app.name=pet-clinic
+grails.env=production
+info.app.grailsVersion=6.2.3

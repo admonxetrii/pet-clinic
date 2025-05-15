@@ -12,7 +12,7 @@ class VisitController {
     }
 
     def create() {
-        def pets = Pet.list()
+        def pets = params?.petId != null ? [Pet.get(params.petId)] : Pet.list()
         render view: 'create', model: [visit: new Visit(), pets: pets]
     }
 
@@ -58,7 +58,7 @@ class VisitController {
         }
         if (result.success) {
             flash.message = "Visit updated successfully"
-            redirectCheck(params, visit)
+            redirectCheck(params, params?.fromShow != null ? 'show' : 'index')
         } else {
             render view: 'edit', model: [visit: visit, pets: Pet.list()]
         }
@@ -70,15 +70,15 @@ class VisitController {
         if (deleted) {
             flash.message = "Visit deleted successfully"
         }
-        redirect action: 'index'
+        redirectCheck(params, 'index')
     }
 
-    def redirectCheck(params, visit) {
-        def petId = params?.petId ?: visit?.pet?.id
-        if (petId) {
-            redirect controller: 'pet', action: 'show', id: petId
-        } else {
-            redirect action: 'index'
-        }
+    def redirectCheck(params, action) {
+        if (params?.petId)
+            redirect controller: 'pet', action: 'show', id: params?.petId
+        else if (action == 'show')
+            redirect action: action, id: params?.id
+        else
+            redirect action: action
     }
 }

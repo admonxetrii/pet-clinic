@@ -13,8 +13,6 @@ class PetController {
     }
 
     def create() {
-        if (params)
-            println(params)
         def owners = params?.ownerId != null ? [Owner.get(params.ownerId)] : Owner.list()
         render view: 'create', model: [pet: new Pet(), owners: owners]
     }
@@ -42,12 +40,13 @@ class PetController {
 
     def edit() {
         def pet = petService.getPet(params.id as Long)
+        def owners = params?.ownerId != null ? [Owner.get(params.ownerId)] : Owner.list()
         if (!pet) {
             flash.message = "Pet not found"
             redirectCheck(params, 'index')
             return
         }
-        render view: 'edit', model: [pet: pet, owners: Owner.list()]
+        render view: 'edit', model: [pet: pet, owners: owners]
     }
 
     @Transactional
@@ -61,7 +60,7 @@ class PetController {
         }
         if (result.success) {
             flash.message = "Pet updated successfully"
-            redirectCheck(params, 'index')
+            redirectCheck(params, params?.fromShow != null ? 'show' : 'index')
         } else {
             render view: 'edit', model: [pet: pet, owners: Owner.list()]
         }
@@ -79,8 +78,9 @@ class PetController {
     def redirectCheck(params, action) {
         if (params?.ownerId)
             redirect controller: 'owner', action: 'show', id: params?.ownerId
-        else {
+        else if (action == 'show') {
+            redirect action: action, id: params?.id
+        } else
             redirect action: action
-        }
     }
 }
