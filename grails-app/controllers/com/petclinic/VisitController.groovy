@@ -1,7 +1,9 @@
 package com.petclinic
 
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class VisitController {
     def visitService
     static scaffold = Visit

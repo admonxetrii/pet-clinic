@@ -2,8 +2,10 @@ package com.petclinic
 
 import grails.gorm.transactions.Transactional
 import groovy.util.logging.Slf4j
+import grails.plugin.springsecurity.annotation.Secured
 
 @Slf4j
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class OwnerController {
     def ownerService
     static scaffolding = Owner
